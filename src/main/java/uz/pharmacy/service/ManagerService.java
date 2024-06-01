@@ -57,6 +57,7 @@ public class ManagerService {
                     editDrug();
                 }
                 case 6 -> {
+                    System.out.println("Your balance: " + currentUser.getBalance());
                 }
             }
         }
@@ -65,7 +66,9 @@ public class ManagerService {
     private void editDrug() {
         if (showAllDrugs()) return;
         System.out.println("Chose drug");
-
+        Optional<Drug> optionalDrug = db.getDrugById(getText("Enter id:"));
+        if (optionalDrug.isEmpty()) return;
+        Drug drug = optionalDrug.get();
         while (true){
             switch (getInt("""
                 0 back
@@ -76,10 +79,17 @@ public class ManagerService {
                     return;
                 }
                 case 1 -> {
-
+                    drug.setName(getText("Enter new name:"));
+                    System.out.println("Success!");
                 }
                 case 2 -> {
-
+                    double price = Math.abs(getInt("Enter new price:"));
+                    if (price <= 0) {
+                        drug.setPrice(price);
+                        System.out.println("Success!");
+                        return;
+                    }
+                    System.out.println("Price is incorrect!");
                 }
             }
         }
