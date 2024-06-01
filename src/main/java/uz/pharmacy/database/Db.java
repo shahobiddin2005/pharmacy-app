@@ -115,6 +115,10 @@ public class Db {
         }
     }
 
+    public void addDrug(Drug drug){
+        drugs.add(drug);
+    }
+
     public void addPharmacy(Pharmacy pharmacy){
         pharmacies.add(pharmacy);
     }
@@ -123,6 +127,16 @@ public class Db {
         List<Drug> drugList = new ArrayList<>();
         for (Drug drug : drugs) {
             if (drug.getPharmacy().getManager().getUsername().equals(manager.getUsername())) {
+                drugList.add(drug);
+            }
+        }
+        return drugList;
+    }
+
+    public List<Drug> getDrugsByPharmacy(Pharmacy pharmacy) {
+        List<Drug> drugList = new ArrayList<>();
+        for (Drug drug : drugs) {
+            if (drug.getPharmacy().getId().equals(pharmacy.getId())) {
                 drugList.add(drug);
             }
         }

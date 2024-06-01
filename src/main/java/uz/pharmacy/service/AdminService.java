@@ -105,7 +105,7 @@ public class AdminService {
         User manager = optionalUser.get();
         String name = getText("Enter pharmacy name:");
 
-        Pharmacy pharmacy = new Pharmacy(name, manager);
+        Pharmacy pharmacy = new Pharmacy(name, manager, 0.);
         db.addPharmacy(pharmacy);
         System.out.println("Pharmacy added successfully!");
     }

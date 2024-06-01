@@ -20,11 +20,11 @@ public class UserService {
         while (true) {
             switch (getInt("""
                     0 exit
-                    1 show pharmacy
-                    2 add pharmacy
-                    3 set manager
-                    4 show managers
-                    5 show users
+                    1 search and buy drug
+                    2 show my drugs
+                    3 show balance
+                    4 fill balance
+                    5 edit drug
                     """)) {
                 case 0 -> {
                     System.out.println("see you soon!");

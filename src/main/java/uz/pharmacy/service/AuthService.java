@@ -61,6 +61,7 @@ public class AuthService {
         user.setName(getText("Enter name"));
         user.setUsername(getText("Enter username"));
         user.setPassword(getText("Enter password"));
+        user.setBalance((double) Math.abs(getInt("Enter balance")));
         user.setRole(Role.USER);
         if (db.ifUserExists(user)) {
             System.out.println("Username already exists!");

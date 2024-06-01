@@ -13,5 +13,6 @@ public class Drug implements Cloneable {
     private String name;
     private Pharmacy pharmacy;
     private User owner;
+    private Double price;
 
 }
