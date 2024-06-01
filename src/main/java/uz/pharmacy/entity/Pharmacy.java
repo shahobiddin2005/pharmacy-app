@@ -3,6 +3,7 @@ package uz.pharmacy.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import uz.pharmacy.util.Utils;
 
 @AllArgsConstructor()
@@ -13,4 +14,6 @@ public class Pharmacy {
     private String name;
     private User manager;
     private Double balance;
+
+
 }

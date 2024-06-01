@@ -8,7 +8,6 @@ public class Context {
         currentUser = user;
     }
 
-
     public static User getCurrentUser(){
         return currentUser;
     }

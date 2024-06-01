@@ -14,8 +14,9 @@ import static uz.pharmacy.util.Utils.*;
 public class ManagerService {
 
     private final Db db = Db.getInstance();
-    private static final User currentUser = Context.getCurrentUser();
+    private static User currentUser;
     private ManagerService() {
+
     }
 
     private static ManagerService managerService;
@@ -27,6 +28,7 @@ public class ManagerService {
     }
 
     public void service() {
+        currentUser = Context.getCurrentUser();
         while (true) {
             switch (getInt("""
                     0 exit
@@ -35,10 +37,12 @@ public class ManagerService {
                     3 show drugs by pharmacies
                     4 add drug
                     5 edit drug
-                    6 show balance;
+                    6 delete drug
+                    7 show balance;
                     """)) {
                 case 0 -> {
                     System.out.println("see you soon!");
+                    Context.setUser(null);
                     return;
                 }
                 case 1 -> {
@@ -57,10 +61,23 @@ public class ManagerService {
                     editDrug();
                 }
                 case 6 -> {
+                    deleteDrug();
+                }
+                case 7 -> {
                     System.out.println("Your balance: " + currentUser.getBalance());
                 }
             }
         }
+    }
+
+    private void deleteDrug() {
+        if (showAllDrugs()) return;
+        System.out.println("Chose drug");
+        if (db.deleteDrug(getText("Enter id:"))) {
+            System.out.println("Drug deleted successfully!");
+            return;
+        }
+        System.out.println("Id is incorrect!");
     }
 
     private void editDrug() {
@@ -102,7 +119,7 @@ public class ManagerService {
         if (optionalPharmacy.isEmpty())return;
         String name = getText("Enter drug name:");
         Double price = (double) Math.abs(getInt("Enter drug price:"));
-        Drug drug = new Drug(name, optionalPharmacy.get(), null, price);
+        Drug drug = new Drug(name, optionalPharmacy.get(), price);
         db.addDrug(drug);
         System.out.println("Drug added successfully!");
     }

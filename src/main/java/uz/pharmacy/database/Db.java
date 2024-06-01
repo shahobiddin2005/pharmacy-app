@@ -15,6 +15,7 @@ public class Db {
     private List<User> users = new ArrayList<>();
 
     private Db() {
+        adds();
     }
 
     private static Db db;
@@ -48,6 +49,17 @@ public class Db {
         userDrugs.put(user, new ArrayList<>());
     }
 
+    public boolean deleteDrug(String id){
+        Drug drug = null;
+        for (Drug temp : drugs) {
+            if (temp.getId().equals(id)){
+                drug = temp;
+                break;
+            }
+        }
+        return drugs.remove(drug);
+    }
+
     public boolean ifUserExists(User user) {
         for (User temp : users) {
             if (temp.getName().equalsIgnoreCase(user.getUsername())) {
@@ -65,10 +77,14 @@ public class Db {
                 test = false;
             }
         }
-        if (test){
+        if (test) {
             System.out.println("User does not exist!");
         }
         return test;
+    }
+
+    public List<Drug> getDrugs() {
+        return drugs;
     }
 
     public boolean showManagers() {
@@ -79,14 +95,14 @@ public class Db {
                 test = false;
             }
         }
-        if (test){
+        if (test) {
             System.out.println("Manager does not exist!");
         }
         return test;
     }
 
-    public boolean showPharmacies(){
-        if (pharmacies.isEmpty()){
+    public boolean showPharmacies() {
+        if (pharmacies.isEmpty()) {
             System.out.println("Pharmacies are not available!");
             return true;
         }
@@ -96,9 +112,9 @@ public class Db {
         return false;
     }
 
-    public Optional<User> getManagerById(String id){
+    public Optional<User> getManagerById(String id) {
         for (User manager : users) {
-            if (manager.getId().equals(id) && Objects.equals(manager.getRole(), Role.MANAGER)){
+            if (manager.getId().equals(id) && Objects.equals(manager.getRole(), Role.MANAGER)) {
                 return Optional.of(manager);
             }
         }
@@ -106,8 +122,8 @@ public class Db {
         return Optional.empty();
     }
 
-    public void showDrugs(){
-        if (pharmacies.isEmpty()){
+    public void showDrugs() {
+        if (pharmacies.isEmpty()) {
             System.out.println("Drugs are not available!");
         }
         for (Drug drug : drugs) {
@@ -115,11 +131,11 @@ public class Db {
         }
     }
 
-    public void addDrug(Drug drug){
+    public void addDrug(Drug drug) {
         drugs.add(drug);
     }
 
-    public void addPharmacy(Pharmacy pharmacy){
+    public void addPharmacy(Pharmacy pharmacy) {
         pharmacies.add(pharmacy);
     }
 
@@ -174,11 +190,50 @@ public class Db {
 
     public Optional<User> getUserById(String id) {
         for (User user : users) {
-            if (user.getId().equals(id) && Objects.equals(user.getRole(), Role.USER)){
+            if (user.getId().equals(id) && Objects.equals(user.getRole(), Role.USER)) {
                 return Optional.of(user);
             }
         }
         System.out.println("Id is incorrect!");
         return Optional.empty();
+    }
+
+    private void adds() {
+        users.add(new User("b", "b", "b", 1000000., Role.USER));
+        users.add(new User("a", "a", "a", 1000000., Role.USER));
+        users.add(new User("c", "c", "c", 0., Role.MANAGER));
+        users.add(new User("d", "d", "d", 0., Role.MANAGER));
+
+        for (User user : users) {
+            userDrugs.put(user, new ArrayList<>());
+        }
+
+        pharmacies.add(new Pharmacy("aaa", users.get(2), 0.));
+        pharmacies.add(new Pharmacy("aaa", users.get(2), 0.));
+        pharmacies.add(new Pharmacy("aaa", users.get(3), 0.));
+        pharmacies.add(new Pharmacy("aaa", users.get(3), 0.));
+
+        drugs.add(new Drug("Parasetamaol", pharmacies.get(0), 1500.));
+        drugs.add(new Drug("Tremol", pharmacies.get(0), 2500.));
+        drugs.add(new Drug("Qupen", pharmacies.get(0), 1500.));
+        drugs.add(new Drug("Analgen", pharmacies.get(0), 1500.));
+        drugs.add(new Drug("Setramon", pharmacies.get(0), 1500.));
+        drugs.add(new Drug("Mezim", pharmacies.get(1), 1500.));
+        drugs.add(new Drug("Senepar", pharmacies.get(1), 1500.));
+        drugs.add(new Drug("Kalsiy glyukonat", pharmacies.get(1), 1500.));
+        drugs.add(new Drug("Natriy xlorid", pharmacies.get(1), 1500.));
+        drugs.add(new Drug("Furadonin", pharmacies.get(1), 1100.));
+        drugs.add(new Drug("Septoleta", pharmacies.get(2), 145000.));
+        drugs.add(new Drug("Beseptol", pharmacies.get(2), 24000.));
+        drugs.add(new Drug("Sumamed", pharmacies.get(2), 78000.));
+        drugs.add(new Drug("Amikatsin", pharmacies.get(2), 4000.));
+        drugs.add(new Drug("Sefozolin", pharmacies.get(2), 3500.));
+        drugs.add(new Drug("Tonzilgon", pharmacies.get(3), 86200.));
+        drugs.add(new Drug("Immudon", pharmacies.get(3), 70000.));
+        drugs.add(new Drug("Timalin", pharmacies.get(3), 91000.));
+        drugs.add(new Drug("Timogin", pharmacies.get(3), 122900.));
+        drugs.add(new Drug("Immnal", pharmacies.get(3), 34000.));
+
+
     }
 }
